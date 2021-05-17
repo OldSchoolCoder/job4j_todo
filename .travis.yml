@@ -1,0 +1,17 @@
+sudo: false
+
+# используем язык java. Travis CI поддерживает другие языки тоже.
+language: java
+
+jdk:
+  - openjdk11
+
+addons:
+  postgresql: "10"
+
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database item;' -U postgres
+
