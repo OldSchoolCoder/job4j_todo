@@ -25,6 +25,18 @@
 <body>
 <div class="container pt-3">
     <div class="card border-dark mb-3">
+        <div class="card-header fw-light">
+            <div class="btn-group">
+                <button id="hello" type="button" class="btn btn-dark dropdown-toggle fw-light btn-sm"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Hello!
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item fw-light" href="/todo/login.html">Logout</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="card-body fw-light">
             <form>
                 <div class="mb-3">
@@ -44,12 +56,14 @@
                 <tr>
                     <th>Task</th>
                     <th>Check</th>
+                    <th>Owner</th>
                 </tr>
                 </thead>
                 <tbody id="table">
                 <tr>
-                    <td align="right">Wait</td>
-                    <td>please &nbsp; ...</td>
+                    <td></td>
+                    <td>Wait please ...</td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>

@@ -1,6 +1,7 @@
 package ru.job4j.servlets;
 
 import ru.job4j.model.Item;
+import ru.job4j.model.User;
 import ru.job4j.store.HbStore;
 
 import javax.servlet.ServletException;
@@ -19,8 +20,9 @@ public class AddServlet extends HttpServlet {
         HbStore store = new HbStore();
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
+        User user = (User) req.getSession().getAttribute("user");
         String overview = req.getParameter("overview");
-        Item item = new Item(overview, new Timestamp(System.currentTimeMillis()), false);
+        Item item = new Item(overview, new Timestamp(System.currentTimeMillis()), false, user);
         store.add(item);
     }
 }

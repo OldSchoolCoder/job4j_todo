@@ -1,6 +1,7 @@
 $(document).ready(function () {
     let showAll = false;
     buildTable(showAll);
+    hello();
 
     $('#add').click(function () {
         validateAndAdd();
@@ -14,6 +15,17 @@ $(document).ready(function () {
         buildTable(showAll);
     });
 });
+
+function hello() {
+    $.getJSON("http://localhost:8080/todo/hello.do"
+    ).done(function (response) {
+        $('#hello').text('Hello, ' + response.name +' ! ');
+        console.log("Response Data: " + response);
+    }).fail(function (err) {
+        alert('Request Failed!');
+        console.log("Request Failed: " + err);
+    });
+}
 
 function validateAndAdd() {
     if ($('#overview').val() == '') {
@@ -45,19 +57,22 @@ function buildTable(showAll) {
                     rows.push('<tr><td>' + val.description + '</td><td>' +
                         '<div class="form-check">' +
                         '<input class="form-check-input" type="checkbox" value="" id="' + val.id + '">' +
-                        '</div></td></tr>');
+                        '</div></td>' +
+                        '<td>' + val.user.name + '</td></tr>');
                 }
             } else {
                 if (val.done == false) {
                     rows.push('<tr><td>' + val.description + '</td><td>' +
                         '<div class="form-check">' +
                         '<input class="form-check-input" type="checkbox" value="" id="' + val.id + '">' +
-                        '</div></td></tr>');
+                        '</div></td>' +
+                        '<td>' + val.user.name + '</td></tr>');
                 } else {
                     rows.push('<tr><td>' + val.description + '</td><td>' +
                         '<div class="form-check">' +
                         '<input class="form-check-input" type="checkbox" value="" id="' + val.id + '" checked>' +
-                        '</div></td></tr>');
+                        '</div></td>' +
+                        '<td>' + val.user.name + '</td></tr>');
                 }
             }
         });

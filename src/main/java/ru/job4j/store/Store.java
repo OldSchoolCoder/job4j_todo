@@ -1,14 +1,18 @@
 package ru.job4j.store;
 
 import ru.job4j.model.Item;
+import ru.job4j.model.Model;
+import ru.job4j.model.User;
 
 import java.util.List;
 
 public interface Store {
 
-    Item add(Item item);
+    Model add(Model model);
 
-    Item update(Integer id);
+    Item reverseDone(Integer id);
 
     List<Item> findAll();
+
+    List<User> findByEmail(String email);
 }

@@ -1,30 +1,27 @@
 package ru.job4j.servlets;
 
-import ru.job4j.filter.AuthFilter;
-import ru.job4j.model.Item;
-import ru.job4j.store.HbStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.job4j.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BuildServlet extends HttpServlet {
+public class HelloServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger(BuildServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(HelloServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Item> itemList = new HbStore().findAll();
+        User user = (User) req.getSession().getAttribute("user");
         ObjectMapper mapper = new ObjectMapper();
-        String itemsAsString = mapper.writeValueAsString(itemList);
+        String userAsString = mapper.writeValueAsString(user);
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("json");
-        resp.getWriter().write(itemsAsString);
+        resp.getWriter().write(userAsString);
     }
 }

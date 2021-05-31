@@ -1,7 +1,5 @@
 package ru.job4j.store;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -12,16 +10,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.model.Item;
+import ru.job4j.model.User;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-
-import static org.junit.Assert.*;
 
 public class HbStoreTest {
 
     private Item item;
+    private List<Item> items = new ArrayList<>();
+    private User user = new User();
     private HbStore store;
     private SessionFactory sessionFactory;
     private StandardServiceRegistry registry;
@@ -31,7 +31,8 @@ public class HbStoreTest {
         this.registry = new StandardServiceRegistryBuilder().configure().build();
         this.sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         this.store = new HbStore();
-        this.item = new Item("TestDescription", new Timestamp(System.currentTimeMillis()), false);
+        this.user = new User("Donald2", "mail2", "pass2");
+        this.item = new Item("TestDescription2", new Timestamp(System.currentTimeMillis()), false, user);
     }
 
     @After
@@ -66,8 +67,8 @@ public class HbStoreTest {
         store.add(item);
         Boolean OldDone = this.item.getDone();
         Integer id = item.getId();
-        Item savedItem = store.update(id);
+        Item savedItem = store.reverseDone(id);
         Boolean newDone = savedItem.getDone();
-        Assert.assertNotEquals(OldDone.booleanValue(), newDone);
+        Assert.assertNotEquals(OldDone, newDone);
     }
 }

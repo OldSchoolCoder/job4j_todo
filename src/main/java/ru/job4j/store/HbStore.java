@@ -7,6 +7,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import ru.job4j.model.Item;
+import ru.job4j.model.Model;
+import ru.job4j.model.User;
 
 import java.util.List;
 import java.util.function.Function;
@@ -38,13 +40,13 @@ public class HbStore implements Store, AutoCloseable {
     }
 
     @Override
-    public Item add(Item item) {
-        this.wrapper(session -> session.save(item));
-        return item;
+    public Model add(Model model) {
+        this.wrapper(session -> session.save(model));
+        return model;
     }
 
     @Override
-    public Item update(Integer id) {
+    public Item reverseDone(Integer id) {
         return this.wrapper(session -> {
             Item item = session.get(Item.class, id);
             item.setDone(!item.getDone());
@@ -55,6 +57,15 @@ public class HbStore implements Store, AutoCloseable {
     @Override
     public List<Item> findAll() {
         return this.wrapper(session -> session.createQuery("from Item").list());
+    }
+
+    @Override
+    public List<User> findByEmail(String email) {
+        return this.wrapper(session -> {
+            final Query query = session.createQuery("from User where email=:email");
+            query.setParameter("email", email);
+            return query.getResultList();
+        });
     }
 }
 
