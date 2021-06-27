@@ -36,6 +36,22 @@
     <servlet-name>HelloServlet</servlet-name>
     <servlet-class>ru.job4j.servlets.HelloServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ExceptionHandler</servlet-name>
+    <servlet-class>ru.job4j.servlets.ExceptionHandler</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CategoryServlet</servlet-name>
+    <servlet-class>ru.job4j.servlets.CategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CategoryServlet</servlet-name>
+    <url-pattern>/categorys</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExceptionHandler</servlet-name>
+    <url-pattern>/exception</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>HelloServlet</servlet-name>
     <url-pattern>/hello.do</url-pattern>
@@ -60,4 +76,8 @@
     <servlet-name>AddServlet</servlet-name>
     <url-pattern>/add</url-pattern>
   </servlet-mapping>
+  <error-page>
+    <error-code>401</error-code>
+    <location>/exception</location>
+  </error-page>
 </web-app>

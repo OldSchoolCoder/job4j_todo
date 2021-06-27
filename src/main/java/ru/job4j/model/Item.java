@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,11 +32,15 @@ public class Item implements Model {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Item(String description, Timestamp created, Boolean done, User user) {
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Category> categories = new ArrayList<>();
+
+    public Item(String description, Timestamp created, Boolean done, User user, List<Category> category) {
         this.description = description;
         this.created = created;
         this.done = done;
         this.user = user;
+        this.categories = category;
     }
 
     public Item() {
@@ -46,6 +52,10 @@ public class Item implements Model {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
     }
 
     public Integer getId() {
@@ -80,6 +90,8 @@ public class Item implements Model {
                 ", description='" + description + '\'' +
                 ", created=" + created +
                 ", done=" + done +
+                ", user=" + user +
+                ", categories=" + categories +
                 '}';
     }
 }

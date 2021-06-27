@@ -6,11 +6,13 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
+import ru.job4j.model.Category;
 import ru.job4j.model.Item;
 import ru.job4j.model.Model;
 import ru.job4j.model.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class HbStore implements Store, AutoCloseable {
@@ -56,16 +58,26 @@ public class HbStore implements Store, AutoCloseable {
 
     @Override
     public List<Item> findAll() {
-        return this.wrapper(session -> session.createQuery("from Item").list());
+        return this.wrapper(session -> session.createQuery("select distinct i from Item i join fetch i.categories").list());
     }
 
     @Override
-    public List<User> findByEmail(String email) {
-        return this.wrapper(session -> {
+    public Optional<User> findByEmail(String email) {
+        User user = (User) this.wrapper(session -> {
             final Query query = session.createQuery("from User where email=:email");
             query.setParameter("email", email);
-            return query.getResultList();
+            return query.uniqueResult();
         });
+        return Optional.ofNullable(user);
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return this.wrapper(session -> session.createQuery("from Category ").list());
+    }
+
+    public Category getCategoryById(Integer id) {
+        return this.wrapper(session -> session.find(Category.class, id));
     }
 }
 

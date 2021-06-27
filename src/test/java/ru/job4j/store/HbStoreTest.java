@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.model.Category;
 import ru.job4j.model.Item;
 import ru.job4j.model.User;
 
@@ -20,19 +21,25 @@ import java.util.function.Function;
 public class HbStoreTest {
 
     private Item item;
-    private List<Item> items = new ArrayList<>();
+    private Item item2;
+    private List<Category> categories = new ArrayList<>();
     private User user = new User();
+    private User user2 = new User();
     private HbStore store;
     private SessionFactory sessionFactory;
     private StandardServiceRegistry registry;
+    private Category category;
 
     @Before
     public void setUp() throws Exception {
         this.registry = new StandardServiceRegistryBuilder().configure().build();
         this.sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         this.store = new HbStore();
-        this.user = new User("Donald2", "mail2", "pass2");
-        this.item = new Item("TestDescription2", new Timestamp(System.currentTimeMillis()), false, user);
+        this.user = new User("Donald21", "mail2134", "pass21");
+        this.user2 = new User("Donald212", "mail21235", "pass212");
+        this.item = new Item("TestDescription21", new Timestamp(System.currentTimeMillis()), false, user, categories);
+        this.item2 = new Item("TestDescription212", new Timestamp(System.currentTimeMillis()), false, user2, categories);
+        this.category = new Category("Hard");
     }
 
     @After
@@ -63,10 +70,17 @@ public class HbStoreTest {
     }
 
     @Test
+    public void testAddCategory() {
+        store.add(category);
+        Category savedCategory = this.wrapper(session -> session.get(Category.class, category.getId()));
+        Assert.assertEquals(category, savedCategory);
+    }
+
+    @Test
     public void testUpdate() {
-        store.add(item);
-        Boolean OldDone = this.item.getDone();
-        Integer id = item.getId();
+        store.add(item2);
+        Boolean OldDone = this.item2.getDone();
+        Integer id = item2.getId();
         Item savedItem = store.reverseDone(id);
         Boolean newDone = savedItem.getDone();
         Assert.assertNotEquals(OldDone, newDone);

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,13 +25,14 @@ public class AuthServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         HbStore store = new HbStore();
-        User user = store.findByEmail(email).get(0);
-        if (user.getPassword().equals(password)) {
+        Optional<User> userOptional = store.findByEmail(email);
+        if (userOptional.isPresent() && userOptional.get().getPassword().equals(password)) {
+            User user = userOptional.get();
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             req.getRequestDispatcher("index.html").forward(req, resp);
         } else {
-            throw new ServletException("Error! Bed email or password!");
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error! Bed email or password!");
         }
     }
 }

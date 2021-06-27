@@ -28,8 +28,7 @@
         <div class="card-header fw-light">
             <div class="btn-group">
                 <button id="hello" type="button" class="btn btn-dark dropdown-toggle fw-light btn-sm"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                        data-bs-toggle="dropdown" aria-expanded="false">
                     Hello!
                 </button>
                 <ul class="dropdown-menu">
@@ -41,7 +40,16 @@
             <form>
                 <div class="mb-3">
                     <label for="overview" class="form-label">Overview</label>
-                    <textarea class="form-control" id="overview" rows="3"></textarea>
+                    <textarea name="overview" class="form-control" id="overview" rows="2"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <select multiple name="category" size="3" class="form-select border-dark fw-light" id="category">
+                        <option selected>Select ...</option>
+                        <option value="1">Hard</option>
+                        <option value="2">Normal</option>
+                        <option value="3">Easy</option>
+                    </select>
+                    <label class="input-group-text fw-light" for="category">Category</label>
                 </div>
                 <button type="reset" id="add" class="btn btn-dark fw-light btn-sm">Add task</button>
             </form>
@@ -57,12 +65,14 @@
                     <th>Task</th>
                     <th>Check</th>
                     <th>Owner</th>
+                    <th>Category</th>
                 </tr>
                 </thead>
                 <tbody id="table">
                 <tr>
                     <td></td>
                     <td>Wait please ...</td>
+                    <td></td>
                     <td></td>
                 </tr>
                 </tbody>
