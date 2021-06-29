@@ -32,7 +32,7 @@ public class AuthServlet extends HttpServlet {
             session.setAttribute("user", user);
             req.getRequestDispatcher("index.html").forward(req, resp);
         } else {
-            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error! Bed email or password!");
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error! Wrong email or password!");
         }
     }
 }
