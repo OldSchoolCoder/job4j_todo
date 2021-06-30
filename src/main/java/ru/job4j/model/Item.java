@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,8 @@ public class Item implements Model {
     @JsonProperty
     private String description;
 
-    private Timestamp created;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
     @JsonProperty
     private Boolean done;
@@ -35,9 +37,9 @@ public class Item implements Model {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
-    public Item(String description, Timestamp created, Boolean done, User user, List<Category> category) {
+    public Item(String description, Boolean done, User user, List<Category> category) {
         this.description = description;
-        this.created = created;
+        this.created = new Date(System.currentTimeMillis());
         this.done = done;
         this.user = user;
         this.categories = category;

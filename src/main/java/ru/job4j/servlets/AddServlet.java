@@ -30,7 +30,7 @@ public class AddServlet extends HttpServlet {
         String[] categories = req.getParameterValues("category");
         List<String> stringList = Arrays.asList(categories);
         stringList.forEach(s -> categoryList.add(store.getCategoryById(Integer.parseInt(s))));
-        Item item = new Item(overview, new Timestamp(System.currentTimeMillis()), false, user, categoryList);
+        Item item = new Item(overview, false, user, categoryList);
         store.add(item);
     }
 }

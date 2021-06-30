@@ -35,10 +35,10 @@ public class HbStoreTest {
         this.registry = new StandardServiceRegistryBuilder().configure().build();
         this.sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         this.store = new HbStore();
-        this.user = new User("Donald21", "mail2134", "pass21");
-        this.user2 = new User("Donald212", "mail21235", "pass212");
-        this.item = new Item("TestDescription21", new Timestamp(System.currentTimeMillis()), false, user, categories);
-        this.item2 = new Item("TestDescription212", new Timestamp(System.currentTimeMillis()), false, user2, categories);
+        this.user = new User("Donald21", "mail21345", "pass21");
+        this.user2 = new User("Donald212", "mail51235", "pass212");
+        this.item = new Item("TestDescription21", false, user, categories);
+        this.item2 = new Item("TestDescription212", false, user2, categories);
         this.category = new Category("Hard");
     }
 
